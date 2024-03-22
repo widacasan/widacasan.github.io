@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;700&display=swap');
 
 :root {
-  --primary-color: rgb(30, 28, 52);
-  --accent-color: rgb(255, 145, 0);
-  --text-color: #fff;
-  --hover-color: rgb(249, 225, 225);
-  --shadow-color: rgba(102, 231, 200, 0.69);
+  --primary-color: #022534;
+  --accent-color: #96c7d5;
+  --text-color: #e4f5ff;
+  --hover-color: #094f6e;
+  --shadow-color: #2d7a9c;
 }
 
 * {
@@ -60,16 +60,19 @@ body {
 .menu a:hover {
   background-color: var(--accent-color);
   color: var(--hover-color);
+  border-radius: 8px;
 }
 
 .menu .active {
   color: var(--accent-color);
+  
 }
 
 .toggle-menu,
 .info-content__Subtitle,
 .info-content .social-networks{
   display: none;
+ 
 }
 
 .main {
@@ -111,6 +114,7 @@ span {
 .download-cv:hover {
   background-color: var(--hover-color);
   box-shadow: none;
+  color: var(--text-color) ;
 }
 
 .about {
@@ -219,6 +223,7 @@ span {
 .card__projects-links {
   display: flex;
   justify-content: space-evenly;
+  
 }
 
 .card__projects-links a {
@@ -228,6 +233,7 @@ span {
 
 .card__projects-links i {
   font-size: 1.5em;
+  border: none;
 }
 
 .card .project-details {
@@ -431,15 +437,18 @@ span {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    
   }
 
   .info-content .social-networks,
   .info-content__Subtitle{
     display: block;
+    
   }
 
   .info-content__Subtitle{
     margin-bottom: .5em;
+    
   }
   .info-content .social-networks{
     display: flex;
