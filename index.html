@@ -1,223 +1,1363 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta property="og:title" content="portfolio">
-  <meta property="og:type" content="website">
-  <meta property="og:description" content="this is my portfolio to my projects and speak about my laboral experience "> 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>William David</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Willenruta — Editor de Video & Contenido Audiovisual</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --dark: #111111;
+    --card-bg: #161616;
+    --orange: #FF5C1A;
+    --orange-light: #FF7A40;
+    --orange-dim: rgba(255,92,26,0.12);
+    --red: #D42B2B;
+    --cream: #F5F0EA;
+    --white: #FFFFFF;
+    --muted: #888888;
+    --border: rgba(255,255,255,0.08);
+    --border-orange: rgba(255,92,26,0.35);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── UTILS ─── */
+  .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+  .divider {
+    width: 48px; height: 2px;
+    background: var(--orange);
+    margin: 0.5rem 0 1.5rem;
+  }
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--orange-dim);
+    color: var(--orange-light);
+    border: 1px solid var(--border-orange);
+  }
+
+  /* ─── PAGE WRAPPER ─── */
+  .page { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ═══════════════════════════════
+     COVER
+  ═══════════════════════════════ */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 2rem;
+  }
+
+  .cover-noise {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 60% 50% at 80% 40%, rgba(212,43,43,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 20% 70%, rgba(255,92,26,0.14) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  .cover-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .cover-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .cover-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 2rem;
+  }
+  .cover-eyebrow-line {
+    width: 32px; height: 1px;
+    background: var(--orange);
+  }
+
+  .cover-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 12vw, 140px);
+    line-height: 0.9;
+    letter-spacing: 0.01em;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .cover-title span {
+    color: var(--orange);
+    display: block;
+  }
+
+  .cover-subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    max-width: 460px;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.01em;
+  }
+
+  .cover-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 3.5rem;
+  }
+
+  .cover-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .cover-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+
+  .cover-scroll {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cover-scroll::before {
+    content: '';
+    width: 1px; height: 32px;
+    background: var(--muted);
+  }
+
+  /* ═══════════════════════════════
+     ABOUT
+  ═══════════════════════════════ */
+  .about {
+    padding: 8rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-left { position: relative; }
+
+  .about-photo-frame {
+    aspect-ratio: 3/4;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+  }
+
+  .about-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--muted);
+  }
+
+  .about-photo-placeholder svg {
+    opacity: 0.3;
+  }
+
+  .about-photo-placeholder p {
+    font-size: 12px;
+    text-align: center;
+    opacity: 0.5;
+  }
+
+  .about-badge {
+    position: absolute;
+    bottom: -1px; right: -1px;
+    background: var(--orange);
+    color: var(--white);
+    padding: 8px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 4px 0 4px 0;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-top: 1px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .stat-box {
+    background: var(--card-bg);
+    padding: 1.2rem 1rem;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--orange);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  .about-right h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.02em;
+  }
+
+  .about-right p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+  }
+
+  .about-highlight {
+    background: var(--orange-dim);
+    border-left: 3px solid var(--orange);
+    padding: 1.2rem 1.5rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 15px;
+    color: rgba(255,255,255,0.8);
+    font-style: italic;
+    margin: 2rem 0;
+    line-height: 1.6;
+  }
+
+  .about-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 2rem;
+  }
+
+  /* ═══════════════════════════════
+     SERVICES
+  ═══════════════════════════════ */
+  .services {
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-desc {
+    color: rgba(255,255,255,0.5);
+    max-width: 520px;
+    font-size: 15px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .service-card {
+    background: var(--card-bg);
+    padding: 2rem 1.5rem;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .service-card:hover { background: #1c1c1c; }
+
+  .service-card.featured {
+    background: var(--orange);
+    grid-column: span 1;
+  }
+
+  .service-card.featured:hover { background: var(--orange-light); }
+
+  .service-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: var(--orange-dim);
+    border: 1px solid var(--border-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 1.2rem;
+  }
+
+  .service-card.featured .service-icon {
+    background: rgba(0,0,0,0.2);
+    border-color: rgba(0,0,0,0.15);
+  }
+
+  .service-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+  }
+
+  .service-card.featured .service-name { color: var(--white); }
+
+  .service-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+
+  .service-card.featured .service-desc { color: rgba(255,255,255,0.85); }
+
+  .service-card-wide {
+    grid-column: span 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    background: transparent;
+    padding: 0;
+  }
+
+  /* ═══════════════════════════════
+     PRICING
+  ═══════════════════════════════ */
+  .pricing {
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--black);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .price-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    background: var(--card-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .price-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--border);
+  }
+
+  .price-card.primary::before { background: var(--orange); }
+
+  .price-card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .price-card.primary .price-card-label { color: var(--orange); }
+
+  .price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    line-height: 1;
+    color: var(--white);
+  }
+
+  .price-unit {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+    font-family: 'Outfit', sans-serif;
+    margin-left: 4px;
+  }
+
+  .price-currency {
+    font-size: 18px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    vertical-align: top;
+    margin-top: 8px;
+    display: inline-block;
+    color: var(--orange);
+  }
+
+  .price-name {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0.6rem 0 0.3rem;
+    color: var(--white);
+  }
+
+  .price-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .price-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1rem 0;
+  }
+
+  .price-includes {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .price-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .price-features li {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .price-features li::before {
+    content: '–';
+    color: var(--orange);
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+
+  .pricing-note {
+    border: 1px solid var(--border-orange);
+    background: var(--orange-dim);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .pricing-note-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .pricing-note-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+  }
+
+  .pricing-note-text strong {
+    color: var(--orange-light);
+    display: block;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  /* ═══════════════════════════════
+     PROCESS
+  ═══════════════════════════════ */
+  .process {
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+    margin-top: 3rem;
+  }
+
+  .process-line {
+    position: absolute;
+    top: 28px;
+    left: 12.5%; right: 12.5%;
+    height: 1px;
+    background: var(--border);
+    z-index: 0;
+  }
+
+  .process-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 50%; height: 100%;
+    background: var(--orange);
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    transition: all 0.2s;
+  }
+
+  .step:nth-child(-n+2) .step-num {
+    border-color: var(--orange);
+    color: var(--orange);
+    background: var(--orange-dim);
+  }
+
+  .step-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .step-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ═══════════════════════════════
+     BENEFITS
+  ═══════════════════════════════ */
+  .benefits {
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .benefit-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    transition: border-color 0.2s;
+  }
+
+  .benefit-item:hover { border-color: var(--border-orange); }
+
+  .benefit-icon-wrap {
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    background: var(--orange-dim);
+    border: 1px solid var(--border-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .benefit-text h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .benefit-text p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ═══════════════════════════════
+     BIG STATEMENT
+  ═══════════════════════════════ */
+  .statement {
+    padding: 6rem 2rem;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .statement-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    line-height: 1.3;
+    color: var(--cream);
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+  }
+
+  .statement-text em {
+    color: var(--orange);
+    font-style: normal;
+  }
+
+  .statement-stripe {
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--border);
+    z-index: 0;
+  }
+
+  /* ═══════════════════════════════
+     CONTACT / FOOTER
+  ═══════════════════════════════ */
+  .contact {
+    padding: 6rem 2rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-left h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .contact-left p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--white);
+    font-size: 14px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--card-bg);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--border-orange);
+    background: var(--orange-dim);
+  }
+
+  .contact-link-icon {
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    background: var(--orange-dim);
+    border: 1px solid var(--border-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .contact-link-text { flex: 1; }
+  .contact-link-label { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .contact-link-value { font-size: 14px; font-weight: 500; }
+
+  .contact-link-arrow { color: var(--orange); font-size: 16px; }
+
+  .contact-right {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card-bg);
+  }
+
+  .contact-right h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-right p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .cta-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s;
+    margin-bottom: 1rem;
+  }
+
+  .cta-btn:hover { background: var(--orange-light); }
+
+  .cta-btn.secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: rgba(255,255,255,0.7);
+    font-weight: 500;
+  }
+
+  .cta-btn.secondary:hover {
+    border-color: var(--border-orange);
+    color: var(--orange-light);
+    background: var(--orange-dim);
+  }
+
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+  }
+
+  .footer-brand span { color: var(--orange); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ─── SECTION BREAK ─── */
+  .section-break {
+    border: none;
+    height: 1px;
+    background: var(--border);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .process-line { display: none; }
+    .benefits-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .section-title { font-size: 40px; }
+    .about-right h2 { font-size: 36px; }
+  }
+
+  @media (max-width: 480px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .cover-title { font-size: 64px; }
+  }
+
+  @print {
+    body { background: white; color: black; }
+  }
+</style>
 </head>
 <body>
-  <div class="wrapper">
-    <header>
-      <nav class="navbar">
-        <div class="brand">
-          <h2>W<span>C</span></h2>
-        </div>
-        <ul class="menu" id="menu">
-          <li><a class="active" href="#inicio">Inicio</a></li>
-          <li><a href="#sobremi">Sobre mí</a></li>
-          <li><a href="#portafolio">Portafolio</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-        </ul>
-        <div class="toggle-menu">
-          <i class="fas fa-bars" id="toggle_open"></i>
-          <i class="fas fa-close" id="toggle_close"></i>
 
+<!-- ══════════════════════════════════════
+     PORTADA
+══════════════════════════════════════ -->
+<section class="cover">
+  <div class="cover-noise"></div>
+  <div class="cover-grid-lines"></div>
+  <div class="cover-inner">
+
+    <div class="cover-eyebrow">
+      <div class="cover-eyebrow-line"></div>
+      <span class="label">Catálogo de Servicios · 2025</span>
+    </div>
+
+    <h1 class="cover-title">
+      Willen<span>Ruta.</span>
+    </h1>
+
+    <p class="cover-subtitle">
+      Editor de video & creador de contenido audiovisual.<br>
+      Storytelling que retiene. Contenido que convierte.
+    </p>
+
+    <div class="cover-tags">
+      <span class="tag">Reels &amp; TikTok</span>
+      <span class="tag">Edición Dinámica</span>
+      <span class="tag">Grabación</span>
+      <span class="tag">Motion Graphics</span>
+      <span class="tag">Subtítulos Dinámicos</span>
+      <span class="tag">Contenido para Marcas</span>
+    </div>
+
+    <div class="cover-bottom">
+      <span class="cover-year">© 2025 — Colombia</span>
+      <span class="cover-scroll">Desliza para explorar</span>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-break">
+
+<!-- ══════════════════════════════════════
+     SOBRE MÍ
+══════════════════════════════════════ -->
+<section class="about">
+  <div class="about-grid">
+
+    <div class="about-left">
+      <div class="about-photo-frame">
+        <div class="about-photo-placeholder">
+          <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 10a3 3 0 11-6 0 3 3 0 016 0zM3 17a7 7 0 0114 0"/>
+          </svg>
+          <p>Agrega tu foto aquí</p>
         </div>
-      </nav>
-    </header>
-    <main class="main" id="inicio">
-      <div class="info-content">
-        <span class="info-content__Subtitle">Frontend Developer</span>
-        <h1>Soy <span>William </span>Camacho</h1>
-        <div class="social-networks">
-          <a href="https://www.linkedin.com/in/widacasan/" target="_blank">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a href="https://github.com/widacasan" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
+        <span class="about-badge">Colombia · 2025</span>
+      </div>
+      <div class="about-stats">
+        <div class="stat-box">
+          <div class="stat-number">4+</div>
+          <div class="stat-label">Años de experiencia</div>
         </div>
-        <p class="info-content__p">Apasionado de la tecnología y especialista en Ingeniería Mecatrónica, me motiva abordar proyectos que me desafíen a tener un impacto tangible en el mundo real. Mi objetivo es crecer tanto personal como profesionalmente a medida que me sumerjo en nuevos desafíos y aprovecho al máximo mis habilidades y conocimientos.</p>
-        <a download href="./cv/CV-Ing.pdf">
-          <button class="download-cv">Descargar CV</button>
+        <div class="stat-box">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Proyectos entregados</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Formatos dominados</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Enfocado en resultados</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-right">
+      <span class="label">Sobre mí</span>
+      <div class="divider"></div>
+      <h2>Editor que<br>entiende redes.</h2>
+
+      <p>
+        No soy solo un editor de video — soy alguien que entiende cómo funciona el contenido en plataformas actuales. Cada corte, transición y subtítulo está diseñado con un propósito: <strong style="color:rgba(255,255,255,0.9)">retener la atención y generar impacto.</strong>
+      </p>
+
+      <p>
+        Me especializo en contenido vertical dinámico para Instagram, TikTok y YouTube Shorts, con un fuerte enfoque en el ritmo, los hooks de apertura y el storytelling que conecta marcas con audiencias reales.
+      </p>
+
+      <div class="about-highlight">
+        "Mi objetivo no es hacer videos bonitos — es hacer videos que funcionen."
+      </div>
+
+      <p>
+        Trabajo con marcas, emprendedores y creadores que entienden que el contenido de calidad no es un gasto, es una inversión.
+      </p>
+
+      <div class="about-skills">
+        <span class="tag">Adobe Premiere Pro</span>
+        <span class="tag">After Effects</span>
+        <span class="tag">CapCut Pro</span>
+        <span class="tag">DaVinci Resolve</span>
+        <span class="tag">Storytelling</span>
+        <span class="tag">Hook Writing</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-break">
+
+<!-- ══════════════════════════════════════
+     SERVICIOS
+══════════════════════════════════════ -->
+<section class="services">
+  <div class="section-header">
+    <span class="label">Lo que ofrezco</span>
+    <div class="divider"></div>
+    <h2 class="section-title">Servicios</h2>
+    <p class="section-desc">Cada servicio está diseñado para generar contenido que destaque, retenga y convierta en las plataformas que más importan hoy.</p>
+  </div>
+
+  <div class="services-grid">
+
+    <div class="service-card featured">
+      <div class="service-icon">🎬</div>
+      <div class="service-name">Edición de Reels & TikToks</div>
+      <div class="service-desc">Edición dinámica con ritmo, hooks y transiciones pensadas para maximizar retención y alcance orgánico.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <div class="service-name">YouTube Shorts</div>
+      <div class="service-desc">Formato vertical optimizado para el algoritmo de YouTube. Cortes ágiles y contenido que invita al siguiente video.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🎥</div>
+      <div class="service-name">Videos Promocionales</div>
+      <div class="service-desc">Contenido para lanzamientos, productos y campañas. Narrativa visual que comunica tu propuesta de valor.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">📹</div>
+      <div class="service-name">Grabación de Contenido</div>
+      <div class="service-desc">Sesiones de grabación profesional con dirección creativa. Desde productos hasta entrevistas y vlogs de marca.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">✏️</div>
+      <div class="service-name">Subtítulos Dinámicos</div>
+      <div class="service-desc">Subtítulos animados estilo premium — tipografía que refuerza el mensaje y aumenta el tiempo de visualización.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">⚡</div>
+      <div class="service-name">Edición para Marcas</div>
+      <div class="service-desc">Contenido adaptado al tono y estética de tu marca. Consistencia visual, identidad sólida y energía actual.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">✨</div>
+      <div class="service-name">Motion Graphics Básicos</div>
+      <div class="service-desc">Animaciones, lower thirds, textos animados y elementos gráficos que elevan la producción de cualquier video.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🔄</div>
+      <div class="service-name">Adaptación de Formatos</div>
+      <div class="service-desc">Convierto tu contenido horizontal en vertical (y viceversa) sin perder calidad ni impacto visual. 16:9, 9:16, 1:1.</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🎙️</div>
+      <div class="service-name">Grabación + Edición Completa</div>
+      <div class="service-desc">El paquete completo: desde el concepto y la sesión de grabación hasta la entrega del video final listo para publicar.</div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-break">
+
+<!-- ══════════════════════════════════════
+     PRECIOS
+══════════════════════════════════════ -->
+<section class="pricing">
+  <div class="section-header">
+    <span class="label">Inversión</span>
+    <div class="divider"></div>
+    <h2 class="section-title">Tarifas</h2>
+    <p class="section-desc">Precios claros, sin sorpresas. Para proyectos de volumen o acuerdos mensuales, diseñamos paquetes personalizados.</p>
+  </div>
+
+  <div class="pricing-grid">
+
+    <div class="price-card">
+      <div class="price-card-label">Por hora</div>
+      <div class="price-amount">
+        <span class="price-currency">$</span>70.000
+        <span class="price-unit">COP/hr</span>
+      </div>
+      <div class="price-name">Tarifa Horaria</div>
+      <div class="price-desc">Ideal para proyectos cortos, ajustes puntuales o cuando el alcance aún no está del todo definido.</div>
+      <div class="price-divider"></div>
+      <div class="price-includes">Incluye</div>
+      <ul class="price-features">
+        <li>Edición en el tiempo acordado</li>
+        <li>Una ronda de ajustes incluida</li>
+        <li>Entrega en formato solicitado</li>
+        <li>Comunicación directa y ágil</li>
+      </ul>
+    </div>
+
+    <div class="price-card primary">
+      <div class="price-card-label">Más solicitado</div>
+      <div class="price-amount">
+        <span class="price-currency">$</span>200.000
+        <span class="price-unit">COP / video</span>
+      </div>
+      <div class="price-name">Grabación + Edición</div>
+      <div class="price-desc">Desde la sesión de grabación hasta la entrega final. Todo en un solo servicio, sin fricciones.</div>
+      <div class="price-divider"></div>
+      <div class="price-includes">Incluye</div>
+      <ul class="price-features">
+        <li>Sesión de grabación in situ</li>
+        <li>Dirección creativa básica</li>
+        <li>Edición dinámica completa</li>
+        <li>Subtítulos si se requieren</li>
+        <li>Dos rondas de ajustes</li>
+        <li>Entrega en 48–72 hrs</li>
+      </ul>
+    </div>
+
+    <div class="price-card">
+      <div class="price-card-label">Solo edición</div>
+      <div class="price-amount">
+        <span class="price-currency">$</span>120.000
+        <span class="price-unit">COP / video</span>
+      </div>
+      <div class="price-name">Edición de Video</div>
+      <div class="price-desc">Tú graba, yo edito. Envía tu material en bruto y recibe un resultado profesional y listo para publicar.</div>
+      <div class="price-divider"></div>
+      <div class="price-includes">Incluye</div>
+      <ul class="price-features">
+        <li>Selección y corte del material</li>
+        <li>Música, efectos y transiciones</li>
+        <li>Corrección de color básica</li>
+        <li>Subtítulos dinámicos opcionales</li>
+        <li>Una ronda de ajustes</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="pricing-note">
+    <div class="pricing-note-icon">📦</div>
+    <div class="pricing-note-text">
+      <strong>¿Necesitas contenido frecuente o en volumen?</strong>
+      Si produces contenido de manera recurrente — 4, 8 o 12 videos al mes — podemos diseñar un paquete mensual personalizado con condiciones especiales. Escríbeme y lo armamos juntos.
+    </div>
+  </div>
+</section>
+
+<hr class="section-break">
+
+<!-- ══════════════════════════════════════
+     PROCESO
+══════════════════════════════════════ -->
+<section class="process">
+  <div class="section-header">
+    <span class="label">Mi proceso</span>
+    <div class="divider"></div>
+    <h2 class="section-title">Cómo Trabajo</h2>
+    <p class="section-desc">Un proceso simple, directo y enfocado en entregarte exactamente lo que necesitas, en el menor tiempo posible.</p>
+  </div>
+
+  <div class="process-steps">
+    <div class="process-line"></div>
+
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Briefing</div>
+      <div class="step-desc">Hablamos sobre tu proyecto, objetivos, estética y plazos. Sin formularios largos.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Propuesta</div>
+      <div class="step-desc">Te presento el plan de trabajo, costos y tiempos de entrega claramente definidos.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Producción</div>
+      <div class="step-desc">Grabación y/o edición. Trabajo con precisión y te mantengo informado durante el proceso.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Entrega</div>
+      <div class="step-desc">Revisión, ajustes y entrega del archivo final listo para publicar en tu plataforma.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     STATEMENT
+══════════════════════════════════════ -->
+<div style="padding: 4rem 2rem; background: var(--dark);">
+  <div style="max-width:900px; margin:0 auto; text-align:center; padding:3rem 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <p class="statement-text" style="font-family:'DM Serif Display',serif; font-size:clamp(24px,4vw,44px); color:#F5F0EA; font-style:italic; line-height:1.35;">
+      "No hago videos genéricos.<br>Hago contenido que <em style="color:var(--orange); font-style:normal;">para el scroll,<br>genera conexión y mueve audiencias.</em>"
+    </p>
+  </div>
+</div>
+
+<hr class="section-break">
+
+<!-- ══════════════════════════════════════
+     BENEFICIOS
+══════════════════════════════════════ -->
+<section class="benefits">
+  <div class="section-header">
+    <span class="label">Por qué elegirnos</span>
+    <div class="divider"></div>
+    <h2 class="section-title">Beneficios</h2>
+    <p class="section-desc">Trabajar conmigo no es solo contratar un editor — es tener un aliado creativo que entiende el contenido digital de hoy.</p>
+  </div>
+
+  <div class="benefits-grid">
+
+    <div class="benefit-item">
+      <div class="benefit-icon-wrap">🎯</div>
+      <div class="benefit-text">
+        <h4>Enfocado en resultados</h4>
+        <p>Cada decisión de edición está orientada a retención, engagement y resultados reales — no solo a que "se vea bien".</p>
+      </div>
+    </div>
+
+    <div class="benefit-item">
+      <div class="benefit-icon-wrap">⚡</div>
+      <div class="benefit-text">
+        <h4>Entrega rápida y sin rodeos</h4>
+        <p>Entrego en 24 a 72 horas. Comunicación directa por WhatsApp o el canal que prefieras. Sin correos perdidos.</p>
+      </div>
+    </div>
+
+    <div class="benefit-item">
+      <div class="benefit-icon-wrap">🧠</div>
+      <div class="benefit-text">
+        <h4>Entiende el algoritmo</h4>
+        <p>Sé qué retiene, qué engancha y qué hace que un video se comparta. Ese conocimiento está en cada segundo del video.</p>
+      </div>
+    </div>
+
+    <div class="benefit-item">
+      <div class="benefit-icon-wrap">🎨</div>
+      <div class="benefit-text">
+        <h4>Estética actual y moderna</h4>
+        <p>Mi edición tiene identidad propia: limpia, dinámica y alineada con las tendencias visuales que funcionan hoy.</p>
+      </div>
+    </div>
+
+    <div class="benefit-item">
+      <div class="benefit-icon-wrap">🤝</div>
+      <div class="benefit-text">
+        <h4>Trato premium, precio justo</h4>
+        <p>Profesionalismo real: puntualidad, comunicación clara y entregables de calidad. Sin excusas, sin sorpresas.</p>
+      </div>
+    </div>
+
+    <div class="benefit-item">
+      <div class="benefit-icon-wrap">📈</div>
+      <div class="benefit-text">
+        <h4>Mentalidad de creador</h4>
+        <p>No solo edito: pienso el contenido, sugiero ideas y aporto valor más allá de la línea de tiempo de edición.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-break">
+
+<!-- ══════════════════════════════════════
+     CONTACTO
+══════════════════════════════════════ -->
+<section class="contact">
+  <div class="contact-grid">
+
+    <div class="contact-left">
+      <span class="label">Trabajemos juntos</span>
+      <div class="divider"></div>
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,7vw,72px); line-height:0.95; letter-spacing:0.02em; margin-bottom:1rem;">
+        Hagamos<br>algo<br><span style="color:var(--orange);">grande.</span>
+      </h2>
+      <p>¿Tienes un proyecto en mente o necesitas content recurrente para tu marca? Escríbeme — respondo rápido y sin formalidades innecesarias.</p>
+
+      <div class="contact-links">
+
+        <a href="https://www.instagram.com/willenruta_/" target="_blank" class="contact-link">
+          <div class="contact-link-icon">📸</div>
+          <div class="contact-link-text">
+            <div class="contact-link-label">Instagram</div>
+            <div class="contact-link-value">@willenruta_</div>
+          </div>
+          <span class="contact-link-arrow">→</span>
         </a>
+
+        <a href="https://willenruta.carrd.co/" target="_blank" class="contact-link">
+          <div class="contact-link-icon">🎬</div>
+          <div class="contact-link-text">
+            <div class="contact-link-label">Portafolio</div>
+            <div class="contact-link-value">willenruta.carrd.co</div>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+
       </div>
-      <img  src="./img/yo1.jpeg" alt="william camacho picture">
-    </main>
+    </div>
+
+    <div class="contact-right">
+      <h3>¿Listo para empezar?</h3>
+      <p>Ya sea un video sencillo o un plan de contenido mensual, podemos diseñar algo que funcione para tu marca y tu presupuesto.</p>
+
+      <a href="https://www.instagram.com/willenruta_/" target="_blank" class="cta-btn">
+        Escribir por Instagram
+      </a>
+      <a href="https://willenruta.carrd.co/" target="_blank" class="cta-btn secondary">
+        Ver mi portafolio →
+      </a>
+
+      <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid var(--border);">
+        <div style="font-size:12px; color:var(--muted); line-height:1.6;">
+          ⏱ Respondo en menos de 24 hrs<br>
+          📍 Disponible en Colombia (y remoto)<br>
+          💬 Comunicación directa, sin intermediarios
+        </div>
+      </div>
+    </div>
+
   </div>
-  <div class="about" id="sobremi">
-    <img src="./img/WIL_0980.jpeg" alt="William Camacho retrato">
-    <div class="about-info">
-      <h2>Sobre mi</h2>
-      <div class="divider"></div>
-      <p>Imagínate esto: un apasionado de la tecnología y experto en Ingeniería Mecatrónica, listo para enfrentar desafíos que le permitan cambiar el mundo real mientras sigue creciendo como profesional. ¿Cómo lo logra? Con un toque de gracia, por supuesto.</p>
-      <p>Poseo un insaciable apetito por el conocimiento y una disciplina férrea que se combina con un pensamiento creativo desbordante. No me conformo con los métodos tradicionales, ¡yo voy más allá! Exploro sistemas educativos alternativos, desde el autoaprendizaje hasta la investigación de documentos técnicos más recientes. Siempre me mantengo al tanto de los avances más relevantes en este campo, utilizando herramientas y metodologías innovadoras.</p>
-      <p>En resumen, soy el soñador tecnológico que no teme sumergirse en lo desconocido, romper barreras y encontrar soluciones ingeniosas. Mi objetivo es impulsar el progreso y marcar la diferencia en el mundo, dejando una huella imborrable en mi camino. Así es como me defino: un visionario con el don de la gracia y la determinación para llevar la tecnología a nuevas alturas.</p>
-      <a href="https://www.linkedin.com/in/widacasan/" target="_blank">
-        <button class="download-cv">Lee mas sobre mí</button>
-      </a>
-    </div>
-  </div>
-  <div class="portfolio" id="portafolio">
-    <div class="portfolio-headings">
-      <h2>My Portafolio</h2>
-      <div class="divider"></div>
-    </div>
-    <div class="container">
-      <div class="card">  <!-- Proyecto lista de tareas en react -->
-        <div class="card__img">
-        </div>
-        <div class="card__title">
-          <h2>Lista de tareas</h2>
-        </div>
-        <div class="card__projects-links">
-          <a href="https://github.com/widacasan/Lista_de_tareas" target="_blank"> <!-- Aqui va el link de los codigos de proyectos realizados -->
-            <i class="fa-brands fa-github"></i>
-          </a>
-          <a href="https://widacasan.github.io/Lista_de_tareas/build/" target="_blank"> <!-- Aqui va el link de los proyectos realizados -->
-            <i class="fas fa-globe-americas"></i>
-          </a>
-          <a href="https://github.com/widacasan/Lista_de_tareas#readme" target="_blank"> <!-- Aqui va el link de los comentarios sobre como fue el proyecto -->
-            <i class="fas fa-code"></i>
-          </a>
-        </div>
-        <div class="project-details-content">
-          <button class="project-details">
-            <a href="https://widacasan.github.io/Lista_de_tareas/build/" target="_blank">
-              Proyecto
-            </a>
-          </button>
-        </div>
-      </div>
-      <div class="card">  <!-- Proyecto questionary -->
-        <div class="card__img">
-        </div>
-        <div class="card__title">
-          <h2>questionary</h2>
-        </div>
-        <div class="card__projects-links">
-          <a href="https://github.com/widacasan/questionary" target="_blank"> <!-- Aqui va el link de los codigos de proyectos realizados -->
-            <i class="fab fa-github"></i>
-          </a>
-          <a href="https://widacasan.github.io/Lista_de_tareas/build/" target="_blank"> <!-- Aqui va el link de los proyectos realizados -->
-            <i class="fas fa-globe-americas"></i>
-          </a>
-          <a href="https://github.com/widacasan/questionary#readme" target="_blank"> <!-- Aqui va el link de los comentarios sobre como fue el proyecto -->
-            <i class="fas fa-code"></i>
-          </a>
-        </div>
-        <div class="project-details-content">
-          <button class="project-details">
-            <a href="https://widacasan.github.io/Lista_de_tareas/build/" target="_blank">
-              Proyecto
-            </a>
-          </button>
-        </div>
-      </div>
-      <div class="card">  <!-- Proyecto lista de tareas en react -->
-        <div class="card__img">
-        </div>
-        <div class="card__title">
-          <h2>Lista de tareas</h2>
-        </div>
-        <div class="card__projects-links">
-          <a href="https://github.com/widacasan/Lista_de_tareas" target="_blank"> <!-- Aqui va el link de los codigos de proyectos realizados -->
-            <i class="fab fa-github"></i>
-          </a>
-          <a href="https://widacasan.github.io/Lista_de_tareas/build/" target="_blank"> <!-- Aqui va el link de los proyectos realizados -->
-            <i class="fas fa-globe-americas"></i>
-          </a>
-          <a href="https://github.com/widacasan/Lista_de_tareas#readme" target="_blank"> <!-- Aqui va el link de los comentarios sobre como fue el proyecto -->
-            <i class="fas fa-code"></i>
-          </a>
-        </div>
-        <div class="project-details-content">
-          <button class="project-details">
-            <a href="https://widacasan.github.io/Lista_de_tareas/build/" target="_blank">
-              Proyecto
-            </a>
-          </button>
-        </div>
-      </div>
-      <div class="card"> <!-- Proyecto Visualizacion de datos en react -->
-        <div class="card__img">
-          
-        </div>
-        <div class="card__title">
-          <h2>Tabla de datos</h2>
-        </div>
-        <div class="card__projects-links">
-          <a href="https://github.com/widacasan/Visualizacion_de_datos" target="_blank"> <!-- Aqui va el link de los codigos de proyectos realizados -->
-            <i class="fab fa-github"></i>
-          </a>
-          <a href="https://widacasan.github.io/Visualizacion_de_datos/build/" target="_blank"> <!-- Aqui va el link de los proyectos realizados -->
-            <i class="fas fa-globe-americas"></i>
-          </a>
-          <a href="https://github.com/widacasan/Visualizacion_de_datos#readme" target="_blank"> <!-- Aqui va el link de los comentarios sobre como fue el proyecto -->
-            <i class="fas fa-code"></i>
-          </a>
-        </div>
-        <div class="project-details-content">
-          <button class="project-details">
-            <a href="https://widacasan.github.io/Visualizacion_de_datos/build/" target="_blank">
-              Proyecto
-            </a>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="contact-section" id="contacto">
-      <div class="contact-headings">
-        <h2>Contactame</h2>
-        <div class="divider"></div>
-      </div>
-      <div class="container-contact">
-        <img class="contact-selection__img" src="./img/yo1.jpeg" alt="William Camacho picture">
-        <div class="contact">
-          <div class="contact-info">
-            <i class="fa fa-phone"></i>
-            <h2>+57 3209437353</h2>
-          </div>
-          <div class="contact-info">
-            <i class="fa-brands fa-whatsapp"></i>
-            <h2>3125448916</h2>
-          </div>
-          <div class="contact-info">
-            <i class="fa-regular fa-envelope"></i>
-            <h2>widacasan@gmail.com</h2>
-          </div>
-          <div class="contact-info">
-            <i class="fab fa-github"></i>
-            <h2>widacasan</h2>
-          </div>
-          <div class="contact-info">
-              <i class="fab fa-linkedin-in"></i>
-            <h2>widacasan</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-  <footer class="footer">
-    <div class="footer-content">
-      <h2>William Camacho</h2>
-      <h5>Frontend developer</h5>
-    </div>
-    <div class="social-networks">
-      <a href="https://www.linkedin.com/in/widacasan/" target="_blank">
-        <i class="fab fa-linkedin-in"></i>
-      </a>
-      <a href="https://github.com/widacasan" target="_blank">
-        <i class="fab fa-github"></i>
-      </a>
-    </div>
-  </footer>
-  <script src="/js/scripts.js"></script>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-brand">Willen<span>Ruta.</span></div>
+  <div class="footer-copy">Editor de Video · Creador de Contenido · Colombia 2025</div>
+</footer>
+
 </body>
 </html>
